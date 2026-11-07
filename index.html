@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>HW6 Triangular Prism</title>
+
+    <style>
+      body {
+        background: #111;
+        color: #ddd;
+        font: 15px monospace;
+        margin: 20px;
+      }
+
+      body > p {
+        max-width: 1200px;
+      }
+
+      .layout {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .editors {
+        flex: 0 0 340px;
+      }
+
+      textarea {
+        box-sizing: border-box;
+        width: 100%;
+        height: 245px;
+        background: #222;
+        color: #00ff00;
+        font: 14px monospace;
+        white-space: pre;
+        margin: 8px 0 18px;
+        overflow: auto;
+      }
+
+      .scene {
+        flex: 1;
+        min-width: 0;
+        max-width: 960px;
+        overflow: hidden;
+      }
+
+      canvas {
+        width: 100%;
+        height: auto;
+        border: 1px solid #555;
+      }
+
+      .labels {
+        display: flex;
+        text-align: center;
+        font-size: 13px;
+      }
+
+      .labels p {
+        flex: 1;
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 16px;
+        font-size: 13px;
+      }
+
+      #shaderError {
+        color: #ff9999;
+        white-space: pre-wrap;
+      }
+
+      @media (max-width: 800px) {
+        .editors {
+          flex-basis: 260px;
+        }
+
+        body {
+          margin: 10px;
+        }
+
+        .layout {
+          gap: 10px;
+        }
+
+        .labels {
+          font-size: 11px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>HW6 - Earth Sphere / Brick Prism / Wood Cone</h2>
+
+    <p>
+      Drag to rotate. Arrow keys move; W/S zoom.
+      Green continents stay fixed while white clouds move across the blue ocean.
+    </p>
+
+    <div class="layout">
+      <!-- Shader editors on the left. -->
+      <div class="editors">
+        <b>Vertex Shader</b>
+        <textarea id="vertEditor" spellcheck="false"></textarea>
+
+        <b>Fragment Shader</b>
+        <textarea id="fragEditor" spellcheck="false"></textarea>
+
+        <pre id="shaderError"></pre>
+      </div>
+
+      <!-- Scene and controls on the right. -->
+      <div class="scene">
+        <canvas id="glcanvas" width="960" height="600"></canvas>
+
+        <div class="labels">
+          <p>Sphere<br>Earth with moving clouds</p>
+          <p>Prism<br>Brick + bump mapping</p>
+          <p>Cone<br>Wood + normal mapping</p>
+        </div>
+
+        <div class="controls">
+          <label>
+            Rotation
+            <input
+              id="slider"
+              type="range"
+              min="0"
+              max="360"
+              value="0"
+            >
+          </label>
+
+          <span id="sliderValue">0</span>
+
+          <select id="axisSelect">
+            <option value="x">X Rotation</option>
+            <option value="y">Y Rotation</option>
+            <option value="z">Z Rotation</option>
+          </select>
+
+          <button id="spinButton">Start/Stop Rotation</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Load the JavaScript files in this order. -->
+    <script src="transforms.js?v=larger"></script>
+    <script src="models.js?v=larger"></script>
+    <script src="main.js?v=larger"></script>
+  </body>
+</html>
